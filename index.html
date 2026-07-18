@@ -3,151 +3,96 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🎣 Ed Phil — Status</title>
+  <title>Ed Phil — Gone Fishin'</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap");
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     body {
-      font-family: 'Georgia', serif;
+      font-family: "EB Garamond", Georgia, serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.5s;
+      background: linear-gradient(160deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+      color: #c8dce6;
+      overflow: hidden;
     }
-    
-    body.fishing {
-      background: linear-gradient(135deg, #1a3a4a 0%, #2d6a7a 50%, #1a4a3a 100%);
-      color: #d4e8e0;
+    .water {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 40vh;
+      background: linear-gradient(180deg, transparent 0%, rgba(15,32,39,0.4) 30%, rgba(44,83,100,0.3) 100%);
+      z-index: 0;
     }
-    
-    body.available {
-      background: linear-gradient(135deg, #2a4a2a 0%, #3a6a3a 50%, #2a5a2a 100%);
-      color: #d4e8d0;
+    .water::before {
+      content: ""; position: absolute; top: 0; left: -50%; right: -50%; height: 100%;
+      background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(200,220,230,0.03) 40px, rgba(200,220,230,0.03) 42px);
+      animation: drift 20s linear infinite;
     }
-    
-    .container {
-      text-align: center;
-      max-width: 600px;
-      padding: 2rem;
+    @keyframes drift { from { transform: translateX(0); } to { transform: translateX(82px); } }
+    .container { position: relative; z-index: 1; text-align: center; max-width: 640px; padding: 2.5rem; }
+    .fish { font-size: 5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); }
+    h1 { font-size: 3rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.3rem; color: #e8f0f4; }
+    .subtitle { font-size: 1.1rem; font-style: italic; opacity: 0.6; margin-bottom: 2rem; }
+    .status-card {
+      background: rgba(255,255,255,0.06); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      padding: 1.8rem 2rem; margin-bottom: 2rem; text-align: left;
     }
-    
-    .emoji { font-size: 4rem; margin-bottom: 1rem; }
-    
-    h1 {
-      font-size: 2.5rem;
-      font-weight: normal;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
+    .status-card p { font-size: 1.15rem; line-height: 1.7; margin-bottom: 0.8rem; }
+    .status-card p:last-child { margin-bottom: 0; }
+    .label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.5; margin-bottom: 0.3rem; }
+    .value { font-size: 1.1rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.2rem; }
+    .team-note {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 1.4rem 1.6rem; margin-bottom: 2rem; text-align: left;
     }
-    
-    .status {
-      font-size: 1.3rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-    
-    .details {
-      font-size: 0.95rem;
-      opacity: 0.7;
-      line-height: 1.8;
-    }
-    
-    .details dt {
-      display: inline;
-      font-style: italic;
-    }
-    
-    .details dd {
-      display: inline;
-      margin-left: 0.3rem;
-    }
-    
-    .details dd::after {
-      content: "";
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    
-    .quote {
-      margin-top: 2rem;
-      font-style: italic;
-      opacity: 0.6;
-      font-size: 0.9rem;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-    
-    .updated {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      opacity: 0.4;
-    }
+    .team-note h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; margin-bottom: 0.6rem; }
+    .team-note p { font-size: 1rem; line-height: 1.6; opacity: 0.8; }
+    .quote { font-style: italic; opacity: 0.45; font-size: 0.95rem; max-width: 420px; margin: 2rem auto 0; line-height: 1.7; }
+    .quote .attr { display: block; margin-top: 0.4rem; font-style: normal; font-size: 0.8rem; opacity: 0.7; }
+    .updated { margin-top: 2rem; font-size: 0.75rem; opacity: 0.3; }
+    @media (max-width: 600px) { h1 { font-size: 2.2rem; } .grid { grid-template-columns: 1fr; } .container { padding: 1.5rem; } }
   </style>
 </head>
-<body class="fishing">
+<body>
+  <div class="water"></div>
   <div class="container">
-    <div class="emoji" id="emoji">🎣</div>
+    <div class="fish" id="emoji">&#127907;</div>
     <h1 id="title">Gone Fishin'</h1>
-    <div class="status" id="status">
-      Ed is off the network.<br>
-      Routine requests are being handled by Flow.
+    <div class="subtitle">Ed Phil &middot; Systems Architect &middot; Observatory</div>
+    <div class="status-card">
+      <p id="msg1">Ed is off the network and most likely out of cell range.</p>
+      <p id="msg2">Expected back <strong>Monday</strong>, possibly a day or two longer.</p>
+      <div class="grid">
+        <div>
+          <div class="label">Since</div>
+          <div class="value" id="since">Saturday, July 18</div>
+        </div>
+        <div>
+          <div class="label">Expected Return</div>
+          <div class="value" id="return">Monday, July 20 (&plusmn;1&ndash;2 days)</div>
+        </div>
+      </div>
     </div>
-    <dl class="details" id="details">
-      <dt>Since:</dt>
-      <dd id="since">—</dd>
-      <dt>Expected return:</dt>
-      <dd id="return">When the fish stop biting</dd>
-    </dl>
-    <div class="quote" id="quote">
+    <div class="team-note">
+      <h3>For the team</h3>
+      <p>Routine operations are handled by Flow. Content PRs deploy same-day. Architecture decisions are queued for Ed's return. Emergencies: post to the Platform Team topic &mdash; Flow will escalate.</p>
+    </div>
+    <div class="quote">
       "In my sheepfold they made me tremble.<br>
       I went out into the countryside,<br>
-      I wandered ever wandering."<br>
-      — Dumuzi
+      I went out into the countryside,<br>
+      I went hither and thither,<br>
+      I wandered ever wandering."
+      <span class="attr">&mdash; Dumuzi</span>
     </div>
     <div class="updated" id="updated"></div>
   </div>
-
   <script>
-    // Status is read from status.json in the same directory.
-    // The gonefishin module pushes updates to this file.
-    fetch('status.json')
-      .then(r => r.json())
-      .then(data => {
-        const body = document.body;
-        const emoji = document.getElementById('emoji');
-        const title = document.getElementById('title');
-        const status = document.getElementById('status');
-        const since = document.getElementById('since');
-        const ret = document.getElementById('return');
-        const updated = document.getElementById('updated');
-        
-        if (data.fishing) {
-          body.className = 'fishing';
-          emoji.textContent = '🎣';
-          title.textContent = 'Gone Fishin\'';
-          status.innerHTML = data.message || 'Ed is off the network.<br>Routine requests are being handled by Flow.';
-          since.textContent = data.since || '—';
-          ret.textContent = data.expected_return || 'Unknown';
-        } else {
-          body.className = 'available';
-          emoji.textContent = '🟢';
-          title.textContent = 'Available';
-          status.innerHTML = 'Ed is on the network.';
-          since.textContent = '—';
-          ret.textContent = '—';
-        }
-        
-        if (data.updated) {
-          updated.textContent = 'Last updated: ' + new Date(data.updated).toLocaleString();
-        }
-      })
-      .catch(() => {
-        // No status.json — default to fishing
-      });
+    fetch("status.json").then(r=>r.json()).then(data=>{
+      if(data.updated)document.getElementById("updated").textContent="Last updated: "+new Date(data.updated).toLocaleString();
+      if(!data.fishing){document.getElementById("title").textContent="Available";document.getElementById("emoji").textContent="\u{1F7E2}";document.getElementById("msg1").textContent="Ed is on the network.";document.getElementById("msg2").textContent="";document.body.style.background="linear-gradient(160deg,#0f2720,#204343,#2c6453)";}
+    }).catch(()=>{});
   </script>
 </body>
 </html>
