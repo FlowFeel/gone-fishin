@@ -1,7 +1,7 @@
 {
-  "fishing": false,
-  "since": null,
-  "expected_return": null,
-  "message": "Ed is on the network.",
-  "updated": "2026-07-18T21:05:00Z"
+  "fishing": true,
+  "since": "2026-07-18T21:00:00Z",
+  "expected_return": "Monday July 21 (possibly +1-2 days)",
+  "message": "Ed is off the network and out of cell range.",
+  "updated": "2026-07-18T21:12:36.020419+00:00"
 }
