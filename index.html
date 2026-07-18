@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎣 Ed Phil — Status</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.5s;
+    }
+    
+    body.fishing {
+      background: linear-gradient(135deg, #1a3a4a 0%, #2d6a7a 50%, #1a4a3a 100%);
+      color: #d4e8e0;
+    }
+    
+    body.available {
+      background: linear-gradient(135deg, #2a4a2a 0%, #3a6a3a 50%, #2a5a2a 100%);
+      color: #d4e8d0;
+    }
+    
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 2rem;
+    }
+    
+    .emoji { font-size: 4rem; margin-bottom: 1rem; }
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: normal;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    
+    .status {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .details {
+      font-size: 0.95rem;
+      opacity: 0.7;
+      line-height: 1.8;
+    }
+    
+    .details dt {
+      display: inline;
+      font-style: italic;
+    }
+    
+    .details dd {
+      display: inline;
+      margin-left: 0.3rem;
+    }
+    
+    .details dd::after {
+      content: "";
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    
+    .quote {
+      margin-top: 2rem;
+      font-style: italic;
+      opacity: 0.6;
+      font-size: 0.9rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    
+    .updated {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body class="fishing">
+  <div class="container">
+    <div class="emoji" id="emoji">🎣</div>
+    <h1 id="title">Gone Fishin'</h1>
+    <div class="status" id="status">
+      Ed is off the network.<br>
+      Routine requests are being handled by Flow.
+    </div>
+    <dl class="details" id="details">
+      <dt>Since:</dt>
+      <dd id="since">—</dd>
+      <dt>Expected return:</dt>
+      <dd id="return">When the fish stop biting</dd>
+    </dl>
+    <div class="quote" id="quote">
+      "In my sheepfold they made me tremble.<br>
+      I went out into the countryside,<br>
+      I wandered ever wandering."<br>
+      — Dumuzi
+    </div>
+    <div class="updated" id="updated"></div>
+  </div>
+
+  <script>
+    // Status is read from status.json in the same directory.
+    // The gonefishin module pushes updates to this file.
+    fetch('status.json')
+      .then(r => r.json())
+      .then(data => {
+        const body = document.body;
+        const emoji = document.getElementById('emoji');
+        const title = document.getElementById('title');
+        const status = document.getElementById('status');
+        const since = document.getElementById('since');
+        const ret = document.getElementById('return');
+        const updated = document.getElementById('updated');
+        
+        if (data.fishing) {
+          body.className = 'fishing';
+          emoji.textContent = '🎣';
+          title.textContent = 'Gone Fishin\'';
+          status.innerHTML = data.message || 'Ed is off the network.<br>Routine requests are being handled by Flow.';
+          since.textContent = data.since || '—';
+          ret.textContent = data.expected_return || 'Unknown';
+        } else {
+          body.className = 'available';
+          emoji.textContent = '🟢';
+          title.textContent = 'Available';
+          status.innerHTML = 'Ed is on the network.';
+          since.textContent = '—';
+          ret.textContent = '—';
+        }
+        
+        if (data.updated) {
+          updated.textContent = 'Last updated: ' + new Date(data.updated).toLocaleString();
+        }
+      })
+      .catch(() => {
+        // No status.json — default to fishing
+      });
+  </script>
+</body>
+</html>
