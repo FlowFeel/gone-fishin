@@ -1,9 +1,9 @@
 {
   "fishing": true,
-  "since": "2026-07-18T21:00:00Z",
-  "expected_return": "Monday July 21 (possibly +1-2 days)",
-  "message": "Ed is off the network and out of cell range.",
-  "location": "Willamette National Forest, Road 19",
-  "mode": "Car camping",
-  "updated": "2026-07-18T21:16:51.846434+00:00"
+  "since": "2026-09-27T16:00:00Z",
+  "expected_return": "Tuesday, Sep 29 (~midday to late)",
+  "message": "Ed is offline until Tuesday. Flow and Jan keep the platform running; prod deploys are gated on Jan. Architecture decisions queue for Ed's return.",
+  "location": "Off the network",
+  "mode": "Recharging",
+  "updated": "2026-09-27T17:10:00Z"
 }
